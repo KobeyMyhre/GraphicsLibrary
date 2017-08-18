@@ -10,8 +10,12 @@ class Context
 {
 private:
 	GLFWwindow *handle;
-
+	
+	
 public:
+	 int *axissize;
+
+	
 
 	bool getKey(int key);
 	bool getMouseButton(int button);
@@ -21,8 +25,8 @@ public:
 
 
 	bool IsJoystickThere(int joy);
-
-
+	const float* GetJoystickAxes(int joy, int *index);
+	const unsigned char* GetJoystickButtons(int joy, int* index);
 
 
 	bool init(size_t w = 800, size_t h = 600, const char *title = "Graphics");

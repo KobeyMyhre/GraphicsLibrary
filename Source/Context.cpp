@@ -48,6 +48,18 @@ bool Context::IsJoystickThere(int joy)
 	return glfwJoystickPresent(joy);
 }
 
+const float* Context::GetJoystickAxes(int joy, int *index)
+{
+	
+	return glfwGetJoystickAxes(joy, index);
+
+}
+
+const unsigned char * Context::GetJoystickButtons(int joy, int * index)
+{
+	return glfwGetJoystickButtons(joy, index);
+}
+
 bool Context::init(size_t w, size_t h, const char * title)
 {
 	glfwInit();
