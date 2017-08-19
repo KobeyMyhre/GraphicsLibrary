@@ -10,7 +10,7 @@ using namespace std;
 void main()
 {
 	Context context;
-	context.init(800, 600);
+	context.init(1200, 600);
 	
 	Vertex verts[4] =
 	{
@@ -32,22 +32,23 @@ void main()
 
 	
 	//Geometry g = makeGeometry(verts, 4, idxs, 6);
-	Geometry g = makeNGon(4, .5f);
-	//Geometry g = MakeGrid(1, 1);
+	Geometry g = makeNGon(8, .5f);
+	
 	const char* vsource =
 		"#version 450\n"
 		"layout(location = 0) in vec4 position;\n"
 		"layout(location = 1) in vec4 color;\n"
 		"out vec4 vPos;\n"
-		"out vec4 vColor;\n"
+		"flat out vec4 vColor;\n"
 		"void main ()\n"
-		"{ vPos = position;\n"
+		"{ \n"
+		"vPos = position;\n"
 		"gl_Position = position; vColor = color; }\n";
 
 	const char* fsource =
 		"#version 450\n"
 		"in vec4 vPos;\n"
-		"in vec4 vColor;\n"
+		"flat in vec4 vColor;\n"
 		"out vec4 outColor;\n"
 		"void main () {  outColor = vColor; }\n";
 		

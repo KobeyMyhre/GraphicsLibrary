@@ -32,7 +32,10 @@ Geometry makeGeometry(const Vertex * vertices, size_t vsize,
 
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)16);
 
-	
+	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)32);
+
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -130,4 +133,36 @@ void freeShader(Shader & s)
 {
 	glDeleteProgram(s.handle);
 	s = { 0 };
+}
+
+Texture makeTexture(unsigned w, unsigned h, unsigned c, const unsigned char * pixels)
+{
+	Texture retval = { 0 };
+
+	GLenum f = 0;
+	switch (c)
+	{
+	case 1: f = GL_RED; break;
+	case 2: f = GL_RG; break;
+	case 3: f = GL_RGB; break;
+	case 4: f = GL_RGBA; break;
+	}
+
+	glGenTextures(1, &retval.handle);
+	glBindTexture(GL_TEXTURE_2D, retval.handle);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, f, w, h, 0, f, GL_UNSIGNED_BYTE, pixels);
+	
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	return retval;
+}
+
+void freeTexture(Texture & t)
+{
+	glDeleteTextures(1, &t.handle);
+	t = { 0 };
 }

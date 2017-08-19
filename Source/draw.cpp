@@ -19,3 +19,34 @@ void draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 
 
 }
+
+void setUniform(const Shader & shader, int location, float value)
+{
+	glProgramUniform1f(shader.handle, location, value);
+}
+
+void setUniform(const Shader & shader, int location, int value)
+{
+	glProgramUniform1i(shader.handle, location, value);
+}
+
+void setUniform(const Shader & shader, int location, double value)
+{
+	glProgramUniform1d(shader.handle, location, value);
+}
+
+void setUniform(const Shader & shader, int location, const Texture & value, int slot)
+{
+	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, value.handle);
+	glProgramUniform1i(shader.handle, location, slot);
+
+
+}
+
+void clearFrameBuffer(const FrameBufer & fb)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, fb.handle);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
