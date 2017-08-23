@@ -10,10 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01-HelloTriangle", "tests\0
 		{CA377A55-F3F1-4882-BACD-C71F3B3EC901} = {CA377A55-F3F1-4882-BACD-C71F3B3EC901}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02- Uniforms", "..\04- Uniforms\04- Uniforms.vcxproj", "{C63B289C-D644-4B92-9FA3-D33F32EDD7B1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CA377A55-F3F1-4882-BACD-C71F3B3EC901} = {CA377A55-F3F1-4882-BACD-C71F3B3EC901}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02- Uniforms", "tests\02- Uniforms\02- Uniforms.vcxproj", "{C63B289C-D644-4B92-9FA3-D33F32EDD7B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
