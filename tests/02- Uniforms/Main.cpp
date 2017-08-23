@@ -12,6 +12,7 @@
 
 void main()
 {
+	int count;
 	Context context;
 	context.init(1200, 600);
 
@@ -123,8 +124,11 @@ void main()
 		draw(f, s, g);
 
 
-
-
+		const float *input = context.GetJoystickAxes(0, &count);
+		for (int i = 0; i < count; i++)
+		{
+			std::cout << "Idx" << i << ": " << input[i] << std::endl;
+		}
 		
 	}
 
