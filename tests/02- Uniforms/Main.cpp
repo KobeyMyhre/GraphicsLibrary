@@ -54,8 +54,8 @@ void main()
 		"vPos = position;\n"
 		"gl_Position = position;\n"
 		"vUV = UV;"
-		/*"gl_Position.x += sin(time * (gl_Position.x /4)+ press) ; \n"
-		"gl_Position.y -= cos(time * (gl_Position.y /4)+ press1)  ; \n"*/
+		"gl_Position.x += press ; \n"
+		"gl_Position.y += press1  ; \n"
 		"vColor = vec4(sin((time + gl_Position.y) * 2),-cos((time + gl_Position.x) * 2), 0.1f,1); "
 		"}\n";
 	//
@@ -106,7 +106,7 @@ void main()
 		xpos -= context.getKey('A')*.01;
 		ypos -= context.getKey('S')*.01;
 
-		std::cout << xpos << " " << ypos << std::endl;
+		//std::cout << xpos << " " << ypos << std::endl;
 
 		clearFrameBuffer(f);
 		context.getMousePosition(x,y);
