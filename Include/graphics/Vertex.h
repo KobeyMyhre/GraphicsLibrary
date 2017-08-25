@@ -7,6 +7,7 @@ struct Vertex
 	glm::vec4 position;// 16 bytes, 0-15
 	glm::vec4 color; // 16
 	glm::vec2 UV;
+	glm::vec4 norms;
 };
 
 

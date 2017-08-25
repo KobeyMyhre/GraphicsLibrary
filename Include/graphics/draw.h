@@ -8,6 +8,11 @@ struct FrameBufer;
 struct Texture;
 
 void draw(const FrameBufer &f, const Shader &s, const Geometry &g);
+
+enum RenderFlag { DEPTH = 1 };
+void setFlags(int flags);
+
+
 void setUniform(const Shader &shader, int location, float value);
 void setUniform(const Shader &shader, int location, int value);
 void setUniform(const Shader &shader, int location, double value);
@@ -38,4 +43,4 @@ void setUniforms(const Shader &s, int &loc_io, int &tex_io, const T &val)
 	
 }
 
-void clearFrameBuffer(const FrameBufer &fb);
+void clearFrameBuffer(const FrameBufer &fb, bool color = true, bool depth = true);

@@ -20,6 +20,13 @@ void draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 
 }
 
+void setFlags(int flags)
+{
+	
+	if (flags & RenderFlag::DEPTH) glEnable(GL_DEPTH_TEST);
+	else glDisable(GL_DEPTH_TEST);
+}
+
 void setUniform(const Shader & shader, int location, float value)
 {
 	glProgramUniform1f(shader.handle, location, value);
@@ -44,12 +51,14 @@ void setUniform(const Shader & shader, int location, const Texture & value, int 
 
 }
 
-void clearFrameBuffer(const FrameBufer & fb)
+void clearFrameBuffer(const FrameBufer & fb, bool color, bool depth)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, fb.handle);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT * color | GL_DEPTH_BUFFER_BIT * depth);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+
 
 namespace __internal
 {
