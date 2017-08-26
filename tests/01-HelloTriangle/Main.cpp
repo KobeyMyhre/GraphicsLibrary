@@ -9,6 +9,7 @@
 using namespace std;
 void main()
 {
+	int count;
 	Context context;
 	context.init(1200, 600);
 	

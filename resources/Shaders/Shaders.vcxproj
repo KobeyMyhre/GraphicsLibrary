@@ -112,10 +112,16 @@
   <ItemGroup>
     <None Include="cube.frag" />
     <None Include="cube.vert" />
+    <None Include="Lambert.frag" />
+    <None Include="Lambert.vert" />
+    <None Include="mvplite.frag" />
+    <None Include="mvplite.vert" />
     <None Include="Other.frag" />
     <None Include="Other.vert" />
     <None Include="Planet.frag" />
     <None Include="Planet.vert" />
+    <None Include="point.frag" />
+    <None Include="point.vert" />
     <None Include="test.frag" />
     <None Include="test.vert" />
   </ItemGroup>

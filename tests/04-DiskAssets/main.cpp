@@ -75,6 +75,9 @@ void main()
 	int idx = 0;
 	while (context.step())
 	{
+	
+
+
 		glm::vec4 sunPos = {0,0,0,1};
 		int loc = 0;
 		int tslot = 0;
@@ -106,9 +109,9 @@ void main()
 
 		
 
-		glm::mat4 Rotatematrix = glm::rotate((float)context.getTime(), glm::vec3(0.f, 1.f, 0.5f))
+		glm::mat4 Rotatematrix = glm::rotate((float)context.getTime(), glm::vec3(0.f, 1.f, 0.f))
 									* glm::scale(glm::vec3(.75f,.75f,.75f));
-		glm::mat4 TranslateMatrix = glm::scale(glm::vec3(.25f, .25f, .25f)) * glm::rotate((float)context.getTime(), glm::vec3(-1.f, .5f, -.25f));
+		glm::mat4 TranslateMatrix = glm::scale(glm::vec3(.4f, .4f, .4f)) * glm::rotate((float)context.getTime(), glm::vec3(0.f, 1.f, 0.5f));
 
 	
 		setFlags(RenderFlag::DEPTH);
@@ -122,10 +125,10 @@ void main()
 		
 		//setUniforms(s2, loc2, tslot2, tex, idx,4,4);
 		//draw(f, s2, g3);
-		setUniforms(scube, loc, tslot, TranslateMatrix,planet, (float)context.getTime(),sunPos);		
+		setUniforms(scube, loc, tslot, TranslateMatrix ,planet, (float)context.getTime(),sunPos);
 		draw(f, ssphere, sphere);
 		
-		setUniforms(ssphere, loc2, tslot, Rotatematrix, tex,sunPos);
+		setUniforms(ssphere, loc2, tslot2, Rotatematrix, tex,sunPos);
 		draw(f, scube, cube);
 		
 

@@ -103,7 +103,7 @@ Geometry loadGeometry(const char * path)
 		
 		verts[i].position = {p[0],p[1],p[2],1};
 		verts[i].UV = { t[0], t[1] };
-		verts[i].norms = { n[0],n[1],n[2],1 };
+		verts[i].norms = { n[0],n[1],n[2],0 };
 	
 		
 	}

@@ -19,7 +19,7 @@ void main()
 	vNorm = model * norm;
 	gl_Position = model * pos ;
 	gl_Position.x += (sin(time) / 1.5 );
-	gl_Position.y += (cos(time) / 1.5);
+	gl_Position.z += (cos(time) / 1.5);
 	vPos = pos;
 	vUV = UV;
 	
