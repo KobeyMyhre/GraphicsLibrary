@@ -122,7 +122,7 @@ Geometry loadGeometry(const char * path)
 	{
 		indices[i] = shapes[0].mesh.indices[i].vertex_index;
 	}*/
-	
+	solveTangets(verts, vsize, indices, isize);
 	retval = makeGeometry(verts, vsize, indices, isize);
 
 	delete[] verts;

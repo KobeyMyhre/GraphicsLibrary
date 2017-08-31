@@ -41,5 +41,7 @@
     <None Include="Lambert.vert" />
     <None Include="point.vert" />
     <None Include="point.frag" />
+    <None Include="standard.frag" />
+    <None Include="standard.vert" />
   </ItemGroup>
 </Project>

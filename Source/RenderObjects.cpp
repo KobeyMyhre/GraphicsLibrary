@@ -1,3 +1,4 @@
+#define GLM_FORCE_SWIZZLE
 #include "graphics\RenderObjects.h"
 #include "glinc.h"
 #include "graphics\Vertex.h"
@@ -5,6 +6,36 @@
 #ifdef _DEBUG
 #include <iostream>
 #endif
+
+glm::vec4 calcTanget(const Vertex &v0, const Vertex &v1, const Vertex &v2)
+{
+	glm::vec4 p1 = v1.position - v0.position;
+	glm::vec4 p2 = v2.position - v0.position;
+
+	glm::vec2 t1 = v1.UV - v0.UV;
+	glm::vec2 t2 = v2.UV - v0.UV;
+
+	return glm::normalize((p1*t2.y - p2 * t1.y) / (t1.x*t2.y - t1.y*t2.x));
+}
+
+
+void solveTangets(Vertex * v, size_t vsize, const unsigned * idxs, size_t isize)
+{
+	for (int i = 0; i < isize; i += 3)
+	{
+		glm::vec4 T = calcTanget(v[idxs[i]], v[idxs[i+1]], v[idxs[i + 2]]);
+
+		for (int j = 0; j < 3; j++)
+		{
+			v[idxs[i + j]].tangent = T + v[idxs[i + j]].tangent;
+		}
+	}
+
+	for (int i = 0; i < vsize; i++)
+	{
+		v[i].bitangent = glm::vec4(glm::cross(v[i].norms.xyz(), v[i].tangent.xyz()), 0);
+	}
+}
 
 
 Geometry makeGeometry(const Vertex * vertices, size_t vsize,
@@ -40,6 +71,14 @@ Geometry makeGeometry(const Vertex * vertices, size_t vsize,
 
 	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)40);
 
+	glEnableVertexAttribArray(4);
+
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)56);
+
+	glEnableVertexAttribArray(5);
+
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)72);
+
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -54,6 +93,8 @@ void freeGeometry(Geometry & g)
 	glDeleteVertexArrays(1, &g.handle);
 	g = { 0,0,0,0 };
 }
+
+
 
 Shader makeShader(const char * vert_source, const char * rag_source)
 {
