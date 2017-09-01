@@ -122,6 +122,8 @@
     <None Include="Planet.vert" />
     <None Include="point.frag" />
     <None Include="point.vert" />
+    <None Include="quad.frag" />
+    <None Include="quad.vert" />
     <None Include="standard.frag" />
     <None Include="standard.vert" />
     <None Include="test.frag" />

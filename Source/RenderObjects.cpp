@@ -180,23 +180,25 @@ void freeShader(Shader & s)
 	s = { 0 };
 }
 
-Texture makeTexture(unsigned w, unsigned h, unsigned c, const unsigned char * pixels)
+Texture makeTexture(unsigned w, unsigned h, unsigned c, const void * pixels, bool isFloat)
 {
 	Texture retval = { 0 };
 
 	GLenum f = 0;
+	GLenum i = 0;
 	switch (c)
 	{
-	case 1: f = GL_RED; break;
-	case 2: f = GL_RG; break;
-	case 3: f = GL_RGB; break;
-	case 4: f = GL_RGBA; break;
+	case 0: f = GL_DEPTH_COMPONENT; i = GL_DEPTH24_STENCIL8; break;
+	case 1: f = GL_RED;  i = isFloat ? GL_R32F		: GL_RED; break;
+	case 2: f = GL_RG; i = isFloat ? GL_RG32F		: GL_RG; break;
+	case 3: f = GL_RGB; i = isFloat ? GL_RGB32F		: GL_RGB; break;
+	case 4: f = GL_RGBA; i = isFloat ? GL_RGBA32F	: GL_RGBA; break;
 	}
 
 	glGenTextures(1, &retval.handle);
 	glBindTexture(GL_TEXTURE_2D, retval.handle);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, f, w, h, 0, f, GL_UNSIGNED_BYTE, pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, ((isFloat || c== 0)? i : f), w, h, 0, f, isFloat ? GL_FLOAT : GL_UNSIGNED_BYTE, pixels);
 	
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -210,4 +212,50 @@ void freeTexture(Texture & t)
 {
 	glDeleteTextures(1, &t.handle);
 	t = { 0 };
+}
+
+FrameBufer MakeFrameBuffer(unsigned w, unsigned h, unsigned c, bool hasDepth, unsigned nTargets, unsigned nFloatTargets)
+{
+	FrameBufer retval = { 0,w,h,0,0,{0} };
+
+	retval.nTargets = nTargets + nFloatTargets;
+
+	glGenFramebuffers(1, &retval.handle);
+	glBindFramebuffer(GL_FRAMEBUFFER, retval.handle);
+
+	if (hasDepth)
+	{
+		retval.depthTarget = makeTexture(w, h, 0, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, retval.depthTarget.handle, 0);
+	}
+
+	
+
+	const GLenum attachments[8] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2,
+		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
+		GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7 };
+
+	for (int i = 0; i < retval.nTargets && i < 8; ++i)
+	{
+		retval.targets[i] = makeTexture(w, h, c, 0, i >= nTargets);
+		glFramebufferTexture(GL_FRAMEBUFFER, attachments[i], retval.targets[i].handle, 0);
+	}
+
+	glDrawBuffers(retval.nTargets, attachments);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+
+	return retval;
+}
+
+void freeFrameBuffer(FrameBufer & fb)
+{
+	for (unsigned i = 0; i < fb.nTargets; ++i)
+		freeTexture(fb.targets[i]);
+
+	glDeleteFramebuffers(1, &fb.handle);
+	fb = { 0,0,0,0 };
+
 }
