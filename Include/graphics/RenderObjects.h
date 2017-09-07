@@ -1,4 +1,8 @@
 #pragma once
+#include "glm\glm.hpp"
+
+
+
 struct Vertex;
 struct Geometry
 {
@@ -49,3 +53,11 @@ FrameBufer MakeFrameBuffer(unsigned w, unsigned h, unsigned c, bool hasDepth, un
 void freeFrameBuffer(FrameBufer &fb);
 
 
+//class GameObject
+//{
+//public:
+//	Geometry shape;
+//	Texture skin;
+//	glm::mat4 modelMatrix;
+//
+//};

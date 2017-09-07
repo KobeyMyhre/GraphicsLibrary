@@ -42,6 +42,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07-Materials", "tests\07-Ma
 		{CA377A55-F3F1-4882-BACD-C71F3B3EC901} = {CA377A55-F3F1-4882-BACD-C71F3B3EC901}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09- Shadows", "tests\09- Shadows\09- Shadows.vcxproj", "{A551E880-1772-4207-BB08-8070D6A467A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -122,6 +124,14 @@ Global
 		{25F5EF2C-C3D0-49FC-AE24-1BBA73C119AC}.Release|x64.Build.0 = Release|x64
 		{25F5EF2C-C3D0-49FC-AE24-1BBA73C119AC}.Release|x86.ActiveCfg = Release|Win32
 		{25F5EF2C-C3D0-49FC-AE24-1BBA73C119AC}.Release|x86.Build.0 = Release|Win32
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Debug|x64.ActiveCfg = Debug|x64
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Debug|x64.Build.0 = Debug|x64
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Debug|x86.ActiveCfg = Debug|Win32
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Debug|x86.Build.0 = Debug|Win32
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Release|x64.ActiveCfg = Release|x64
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Release|x64.Build.0 = Release|x64
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Release|x86.ActiveCfg = Release|Win32
+		{A551E880-1772-4207-BB08-8070D6A467A6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

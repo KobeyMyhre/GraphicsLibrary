@@ -45,5 +45,9 @@
     <None Include="standard.vert" />
     <None Include="quad.vert" />
     <None Include="quad.frag" />
+    <None Include="shadow.vert" />
+    <None Include="shadow.frag" />
+    <None Include="direct.vert" />
+    <None Include="direct.frag" />
   </ItemGroup>
 </Project>

@@ -58,7 +58,9 @@ void main()
 		
 		setFlags(RenderFlag::DEPTH);
 		clearFrameBuffer(buffer);
-
+		float turn = 0;
+		float rotY = 0;
+		float rotX = 0;
 		//Controls
 		const float *input = context.GetJoystickAxes(0, &count);
 		if (context.IsJoystickThere(0))
@@ -67,11 +69,7 @@ void main()
 			for (int i = 0; i < count; i++)
 			{
 				std::cout << "Idx" << i << ": " << input[i] << std::endl;
-			}
-		}
-		float turn = 0;
-		float rotY = 0;
-		float rotX = 0;
+			}	
 		rotY += input[3] /** context.getTime()*/;
 		rotX += input[2]/* * context.getTime()*/;
 		y += input[0];
@@ -84,6 +82,9 @@ void main()
 		{
 			turn += input[5];
 		}
+		}
+		
+	
 
 
 
