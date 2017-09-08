@@ -25,6 +25,12 @@ void setFlags(int flags)
 	
 	if (flags & RenderFlag::DEPTH) glEnable(GL_DEPTH_TEST);
 	else glDisable(GL_DEPTH_TEST);
+
+	if (flags & RenderFlag::ADDITIVE)
+	{
+		glEnable(GL_BLEND); glBlendFunc(GL_ONE, GL_ONE);
+	}
+	else glDisable(GL_BLEND);
 }
 
 void setUniform(const Shader & shader, int location, float value)

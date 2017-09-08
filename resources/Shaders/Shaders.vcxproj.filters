@@ -21,8 +21,6 @@
     <None Include="test.vert">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="Other.vert" />
-    <None Include="Other.frag" />
     <None Include="cube.frag">
       <Filter>Source Files</Filter>
     </None>
@@ -35,19 +33,59 @@
     <None Include="Planet.frag">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="mvplite.frag" />
-    <None Include="mvplite.vert" />
-    <None Include="Lambert.frag" />
-    <None Include="Lambert.vert" />
-    <None Include="point.vert" />
-    <None Include="point.frag" />
-    <None Include="standard.frag" />
-    <None Include="standard.vert" />
-    <None Include="quad.vert" />
-    <None Include="quad.frag" />
-    <None Include="shadow.vert" />
-    <None Include="shadow.frag" />
-    <None Include="direct.vert" />
-    <None Include="direct.frag" />
+    <None Include="standard.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="standard.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="direct.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="direct.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Lambert.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Lambert.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="mvplite.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="mvplite.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Other.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Other.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="point.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="point.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="quad.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="quad.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shadow.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shadow.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="gpass.vert" />
+    <None Include="gpass.frag" />
+    <None Include="cpass.vert" />
+    <None Include="cpass.frag" />
+    <None Include="lpassD.vert" />
+    <None Include="lpassD.frag" />
   </ItemGroup>
 </Project>

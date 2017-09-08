@@ -2,7 +2,7 @@
 #include "graphics\Vertex.h"
 #include "graphics\RenderObjects.h"
 #include "graphics\draw.h"
-
+#include "graphics\GameObjects.h"
 
 #include <iostream>
 #include <random>
@@ -27,12 +27,12 @@ void main()
 	Geometry quad = makeGeometry(vquad, 4, quadidx, 6);
 	glm::mat4 modquad = glm::rotate(glm::radians(90.f), glm::vec3(1, 0, 0)) * glm::scale(glm::vec3(5, 5, 1));
 
-	Geometry ss_geo = loadGeometry("../../resources/models/soulspear.obj");
+	/*Geometry ss_geo = loadGeometry("../../resources/models/soulspear.obj");
 	
 	Texture spear_normal = loadTexture("../../resources/textures/soulspear_normal.tga");
 	Texture spear_diffuse = loadTexture("../../resources/textures/soulspear_diffuse.tga");
 	Texture spear_specular = loadTexture("../../resources/textures/soulspear_specular.tga");
-	float spear_gloss = 4.0f;
+	float spear_gloss = 4.0f;*/
 
 	Texture color = loadTexture("../../resources/textures/Planet.png");
 
@@ -45,6 +45,19 @@ void main()
 
 	Shader fsq_shader = loadShader("../../resources/shaders/quad.vert",
 									"../../resources/shaders/quad.frag");
+
+
+	Camera cma;
+	Lights L1;
+	SpecGloss ss;
+	ss.geo = loadGeometry("../../resources/models/soulspear.obj");
+	ss.normal = loadTexture("../../resources/textures/soulspear_normal.tga");
+	ss.diffuse = loadTexture("../../resources/textures/soulspear_diffuse.tga");
+	ss.specular = loadTexture("../../resources/textures/soulspear_specular.tga");
+	ss.gloss = 4.0f;
+
+	SpecGloss ss2 = ss;
+	
 
 
 	int x = 0;
@@ -86,32 +99,43 @@ void main()
 		
 	
 
-
-
+		////lights
+		//L1.dir = glm::normalize(glm::vec3(.8, -1, -1));
+		//L1.proj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
+		//L1.view = glm::lookAt(-L1.dir, glm::vec3(0, 0, 0), glm::vec3(-1, 1, 0));
 
 		//Camera
 		glm::vec3 Tpos = { -y,0,-x };
-		glm::mat4 cam_view = glm::lookAt(glm::vec3(0, 3, -4), Tpos, glm::vec3(0, 1, 0)) * glm::rotate(rotY,glm::vec3(-1,0,0)) *  glm::rotate(rotX, glm::vec3(0, -1, 0)) * glm::translate(glm::vec3(0,0, -turn * context.getTime() /3));
-		glm::mat4 cam_proj = glm::perspective(45.f, 800.f / 600.f, .01f, 100.f);
+		cma.view = glm::lookAt(glm::vec3(0, 3, -4), Tpos, glm::vec3(0, 1, 0)) * glm::rotate(rotY,glm::vec3(-1,0,0)) *  glm::rotate(rotX, glm::vec3(0, -1, 0)) * glm::translate(glm::vec3(0,0, -turn * context.getTime() /3));
+		cma.proj = glm::perspective(45.f, 800.f / 600.f, .01f, 100.f);
 
 		//Model
-		glm::mat4 go_model = glm::rotate((float)context.getTime() / 3, glm::vec3(0, -1, 0));
-
+		ss.model = glm::rotate((float)context.getTime() / 3, glm::vec3(0, -1, 0));
+		ss2.model = glm::rotate((float)context.getTime() / 3, glm::vec3(0, 0, 1));
 		//Lighting
-		glm::vec3 light_direction = glm::normalize(glm::vec3(0.5f, 0.5f, 0));
-		glm::vec4 l_color = glm::vec4{.9f,.9f,.9f,1};
-		float l_intensity = 12;
-		glm::vec4 l_ambient = glm::vec4(.9f,.9f,.9f,1);
-		int l_type = 1;
+		L1.dir = glm::normalize(glm::vec3(0.5f, 0.5f, 0));
+		L1.color = glm::vec4{.9f,.9f,.9f,1};
+		L1.intensity = 12;
+		L1.ambient = glm::vec4(.9f,.9f,.9f,1);
+		L1.type = 1;
 
 
 
 		setUniforms(standard,loc1,slot, 
-					cam_proj, cam_view, 
-					go_model, 
-					spear_normal, spear_diffuse, spear_specular, spear_gloss,
-					light_direction, l_color, l_intensity, l_ambient, l_type);
-		draw(buffer, standard, ss_geo);
+					cma.proj, cma.view,
+					ss.model, 
+					ss.normal, ss.diffuse, ss.specular, ss.gloss,
+			L1.dir, L1.color, L1.intensity, L1.ambient, L1.type);
+		draw(buffer, standard, ss.geo);
+
+		loc1 = 0;
+		slot = 0;
+		setUniforms(standard, loc1, slot,
+			cma.proj, cma.view,
+			ss2.model,
+			ss2.normal, ss2.diffuse, ss2.specular, ss2.gloss,
+			L1.dir, L1.color, L1.intensity, L1.ambient, L1.type);
+		draw(buffer, standard, ss2.geo);
 
 
 		clearFrameBuffer(screen);

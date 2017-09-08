@@ -1,21 +1,28 @@
 #include "GameObjects.h"
+#include "graphics\draw.h"
 
-//glm::mat4 Transform::getLocal() const
-//{
-//	glm::mat4 retval;
-//	
-//	retval *= position * rotation * scale;
-//	return retval;
-//}
 
-//glm::mat4 Transform::getGlobal() const
-//{
-//	return parent->getGlobal() * getLocal();
-//}
-//
-//
-//
-//void Transform::lookAt(const glm::vec3 & target, const glm::vec3 & up)
-//{
-//	rotation = glm::lookAt(glm:: vec3(target), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
-//}
+void __internal::t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const Camera & val)
+{
+	t_setUniforms(s, loc_io, tex_io, val.proj);
+	t_setUniforms(s, loc_io, tex_io, val.view);
+}
+
+void __internal::t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const SpecGloss & val)
+{
+	t_setUniforms(s, loc_io, tex_io, val.model); // 0 matrix
+	t_setUniforms(s, loc_io, tex_io, val.diffuse); // 1 texture
+	t_setUniforms(s, loc_io, tex_io, val.specular); // 2 texture
+	t_setUniforms(s, loc_io, tex_io, val.normal); // 3 texture
+	t_setUniforms(s, loc_io, tex_io, val.gloss); // 4 float
+}
+
+
+void  __internal::t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const DLite &val)
+{
+	t_setUniforms(s, loc_io, tex_io, val.getProj());
+	t_setUniforms(s, loc_io, tex_io, val.getView());
+	t_setUniforms(s, loc_io, tex_io, val.color);
+	t_setUniforms(s, loc_io, tex_io, val.intensity);
+	t_setUniforms(s, loc_io, tex_io, val.direction);
+}

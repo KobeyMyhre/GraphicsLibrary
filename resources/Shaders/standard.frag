@@ -38,6 +38,7 @@ float phong(in vec3 N,in vec3 L,in vec3 V, in float power)
 }
 
 
+
 void main()
 {
 	vec3 normal =( vTBN *  (2 * texture(normalMap,vUV) - 1)).xyz;

@@ -39,7 +39,7 @@ void main()
 	glm::mat4 cube_model = glm::translate(glm::vec3(2, 1, -1));
 
 
-	
+	Texture texColor = loadTexture("../../resources/textures/Planet.png");
 
 	//	Camera
 	
@@ -48,13 +48,13 @@ void main()
 	glm::vec3 light_dir = glm::normalize(glm::vec3(.8, -1, -1));
 	glm::mat4 light_proj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
 	glm::mat4 light_view = glm::lookAt(-light_dir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	glm::vec4 color = glm::vec4(1, 1, 0, 1);
+	glm::vec4 color = glm::vec4(1, 0, 1, 1);
 	//Second Light
 	// Light2
-	glm::vec3 light_dir2 = glm::normalize(glm::vec3(.6, -.8, 1));
+	glm::vec3 light_dir2 = glm::normalize(glm::vec3(-1, -.8, 1));
 	glm::mat4 light_proj2 = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
-	glm::mat4 light_view2 = glm::lookAt(-light_dir, glm::vec3(0, 0, 0), glm::vec3(1, .5f, 0));
-	glm::vec4 color2 = glm::vec4(1, 0, 1, 1);
+	glm::mat4 light_view2 = glm::lookAt(-light_dir2, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::vec4 color2 = glm::vec4(.5f, .5f, 1, 1);
 
 	// Shaders
 	Shader shdr_shadow = loadShader("../../resources/shaders/shadow.vert",
@@ -109,29 +109,29 @@ void main()
 
 		
 		
-		ss_model = glm::rotate(time, glm::vec3(0, 1, 0)); // on update.
+		ss_model = glm::rotate(time, glm::vec3(0, glm::sin(time), 0)); // on update.
 
-
+		
 														  // Shadow Pass
 		setFlags(RenderFlag::DEPTH);
 		clearFrameBuffer(fb_shadow, false, true);
 
 		int loc = 0;
 		int slot = 0;
-		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, floor_model);
+		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, floor_model, texColor);
 		draw(fb_shadow, shdr_shadow, floor_geo);
 		
 		loc = slot = 0;
-		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, ss_model);
+		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, ss_model, texColor);
 		draw(fb_shadow, shdr_shadow, ss_geo);
 
 		loc = slot = 0;
-		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, cube_model);
+		setUniforms(shdr_shadow, loc, slot, light_proj, light_view, cube_model, texColor);
 		draw(fb_shadow, shdr_shadow, cube_geo);
 
 
 		//Second Light
-		setFlags(RenderFlag::DEPTH);
+		/*setFlags(RenderFlag::DEPTH);
 		clearFrameBuffer(fb_shadow2, false, true);
 
 		 loc = 0;
@@ -145,7 +145,7 @@ void main()
 
 		loc = slot = 0;
 		setUniforms(shdr_shadow, loc, slot, light_proj2, light_view2, cube_model);
-		draw(fb_shadow2, shdr_shadow, cube_geo);
+		draw(fb_shadow2, shdr_shadow, cube_geo);*/
 
 
 
@@ -158,24 +158,24 @@ void main()
 		setUniforms(shdr_direct, loc, slot,
 			cam_proj, cam_view,     // Camera Data
 			floor_model,            // Geometry Data
-			light_proj, light_view, // Light Data
-			fb_shadow.depthTarget); // Shadow Map
+			light_proj, light_view, light_proj2, light_view2, // Light Data
+			fb_shadow.depthTarget, texColor,color, color2); // Shadow Map
 		draw(screen, shdr_direct, floor_geo);
 
 		loc = slot = 0;
 		setUniforms(shdr_direct, loc, slot,
 			cam_proj, cam_view,     // Camera Data
 			ss_model,            // Geometry Data
-			light_proj, light_view, // Light Data
-			fb_shadow.depthTarget); // Shadow Map
+			light_proj, light_view, light_proj2, light_view2, // Light Data
+			fb_shadow.depthTarget, texColor, color, color2); // Shadow Map
 		draw(screen, shdr_direct, ss_geo);
 
 		loc = slot = 0;
 		setUniforms(shdr_direct, loc, slot,
 			cam_proj, cam_view,     // Camera Data
 			cube_model,            // Geometry Data
-			light_proj, light_view, // Light Data
-			fb_shadow.depthTarget); // Shadow Map
+			light_proj, light_view, light_proj2, light_view2, // Light Data
+			fb_shadow.depthTarget, texColor, color, color2); // Shadow Map
 		draw(screen, shdr_direct, cube_geo);
 		//... other geometry
 	}

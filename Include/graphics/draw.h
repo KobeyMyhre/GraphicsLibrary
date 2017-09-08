@@ -9,7 +9,12 @@ struct Texture;
 
 void draw(const FrameBufer &f, const Shader &s, const Geometry &g);
 
-enum RenderFlag { DEPTH = 1 };
+enum RenderFlag 
+{
+	NONE = 0,
+	DEPTH = 1,
+	ADDITIVE =2
+};
 void setFlags(int flags);
 
 
