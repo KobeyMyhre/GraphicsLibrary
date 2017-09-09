@@ -3,6 +3,29 @@
 #include "graphics\RenderObjects.h"
 #include <glm/gtc/type_ptr.hpp>
 
+
+void tess_draw(const FrameBufer &f, const Shader &s, const Geometry &g)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, f.handle);
+	glUseProgram(s.handle);
+	glBindVertexArray(g.handle);
+
+	glViewport(0, 0, f.width, f.height);
+
+	glPatchParameteri(GL_PATCH_VERTICES, 3);
+	//glDrawArrays(GL_PATCHES, 0, g.size);
+	glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
+
+	/*glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glUseProgram(0);
+	glBindVertexArray(0);*/
+
+
+}
+
+
+
+
 void draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, f.handle);
@@ -96,5 +119,9 @@ namespace __internal
 	void t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const  glm::mat4 & val)
 	{
 		glProgramUniformMatrix4fv(s.handle, loc_io++, 1, 0, glm::value_ptr(val));
+	}
+	void t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const glm::mat3 & val)
+	{
+		glProgramUniformMatrix3fv(s.handle, loc_io++, 1, 0, glm::value_ptr(val));
 	}
 }

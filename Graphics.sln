@@ -49,6 +49,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10- Deferred", "tests\10- D
 		{CA377A55-F3F1-4882-BACD-C71F3B3EC901} = {CA377A55-F3F1-4882-BACD-C71F3B3EC901}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Final- Tessellations", "tests\Final- Tessellations\Final- Tessellations.vcxproj", "{424901FA-8BA6-475C-AB64-6A5F7A3EF558}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA377A55-F3F1-4882-BACD-C71F3B3EC901} = {CA377A55-F3F1-4882-BACD-C71F3B3EC901}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -145,6 +150,14 @@ Global
 		{591D2D73-C3F1-4573-BE3C-6E01ECD0F16A}.Release|x64.Build.0 = Release|x64
 		{591D2D73-C3F1-4573-BE3C-6E01ECD0F16A}.Release|x86.ActiveCfg = Release|Win32
 		{591D2D73-C3F1-4573-BE3C-6E01ECD0F16A}.Release|x86.Build.0 = Release|Win32
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Debug|x64.ActiveCfg = Debug|x64
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Debug|x64.Build.0 = Debug|x64
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Debug|x86.ActiveCfg = Debug|Win32
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Debug|x86.Build.0 = Debug|Win32
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Release|x64.ActiveCfg = Release|x64
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Release|x64.Build.0 = Release|x64
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Release|x86.ActiveCfg = Release|Win32
+		{424901FA-8BA6-475C-AB64-6A5F7A3EF558}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

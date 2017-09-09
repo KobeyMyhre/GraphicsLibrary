@@ -81,11 +81,28 @@
     <None Include="shadow.vert">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="gpass.vert" />
-    <None Include="gpass.frag" />
-    <None Include="cpass.vert" />
-    <None Include="cpass.frag" />
-    <None Include="lpassD.vert" />
-    <None Include="lpassD.frag" />
+    <None Include="cpass.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="cpass.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="gpass.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="gpass.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="lpassD.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="lpassD.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Tess.vert" />
+    <None Include="Tess.frag" />
+    <None Include="Tess.cntrl" />
+    <None Include="Tess.eval" />
+    <None Include="Tess.geom" />
   </ItemGroup>
 </Project>

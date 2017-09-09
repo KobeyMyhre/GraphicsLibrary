@@ -1,8 +1,6 @@
 #version 450
 
 in vec2 vUV;
-in vec4 vPos;
-in mat4 vTBN;
 
 layout(location = 1) uniform mat4 view;
 
@@ -11,7 +9,7 @@ layout(location = 4) uniform mat4 lightView;
 
 layout(location = 5) uniform vec4 lightColor;
 layout(location = 6) uniform float intensity;
-layout(location = 7) uniform mat4 lightDir;
+layout(location = 7) uniform vec3 lightDir;
 layout(location = 8) uniform sampler2D normalMap;
 layout(location = 9) uniform sampler2D posMap;
 layout(location = 10) uniform sampler2D shadowMap;
@@ -30,7 +28,7 @@ uniform mat4 clipToUV = mat4(0.5f, 0.0f, 0.0f, 0.0f,
 
 float ghetto_pcf(in sampler2D shadowmap, in vec4 shadowPosition, int iterations)
 {
-	vec2 sDim = textureSize(shadowap,0).xy;
+	vec2 sDim = textureSize(shadowmap,0).xy;
 	float retval = 0;
 	
 	vec2 uv = shadowPosition.xy;
@@ -61,11 +59,12 @@ float phong(in vec3 N,in vec3 L,in vec3 V, in float power)
 
 void main()
 {
-	vec3 normal =( vTBN *  (2 * texture(normalMap,vUV) - 1)).xyz;
-	vec4 sUV = clipToUV * lightProj * lightView * inverse(view) * vPos;
+	vec3 vPos = texture(posMap, vUV).xyz;
+	//vec3 normal = texture(normalMap,vUV); //( vTBN *  (2 * texture(normalMap,vUV) - 1)).xyz;
+	vec4 sUV = clipToUV * lightProj * lightView * inverse(view) * vec4(vPos,1);
 	
 	vec4 specular = texture(specularMap,vUV);
-
+	//
 
 	float visibility = 1;
 	if(texture(shadowMap,sUV.xy).r  < sUV.z - shadowBias)
@@ -81,7 +80,7 @@ void main()
 
 	float lamb = (max(0,dot(-L,N)));
 
-	float spec = phong(normal, lightDir, normalize(view[3].xyz - vPos),gloss);
+	float spec = phong(N, L, normalize( vPos),gloss);
 
 	vec4 outSpecular = specular * spec * lightColor * intensity;
 

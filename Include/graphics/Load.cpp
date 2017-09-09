@@ -69,6 +69,27 @@ Shader loadShader(const char * vpath, const char * fpath)
 
 }
 
+Shader loadShader(const char * vpath, const char * fpath, const char * Gpath, const char * Cpath, const char * Epath)
+{
+	Shader retval = { 0 };
+
+	string v = fileToString(vpath);
+	string f = fileToString(fpath);
+	string c = fileToString(Cpath);
+	string e = fileToString(Epath);
+	string G = fileToString(Gpath);
+
+	const char *vsource = v.c_str();
+	const char *fsource = f.c_str();
+	const char *csource = c.c_str();
+	const char *esource = e.c_str();
+	const char *gsource = G.c_str();
+
+	retval = makeShader(vsource, fsource, gsource, csource,esource);
+
+	return retval;
+}
+
 glm::vec4 randColor()
 {
 	return{ rand() / (float)RAND_MAX,rand() / (float)RAND_MAX,rand() / (float)RAND_MAX,1 };

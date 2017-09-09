@@ -84,7 +84,7 @@ void main()
 	FrameBufer screen = { 0,1280,720 };
 	FrameBufer gbuffer = MakeFrameBuffer(1280, 720, 4, true, 2, 2);
 	FrameBufer lbuffer = MakeFrameBuffer(1280, 720, 4, false, 2, 0);
-	FrameBufer sbuffer = MakeFrameBuffer(1024, 1024, 0, false, 0, 0);
+	FrameBufer sbuffer = MakeFrameBuffer(1024, 1024, 0, true, 0, 0);
 
 
 	int loc = 0, slot = 0;
@@ -109,8 +109,9 @@ void main()
 		for (int i = 0; i < 2; ++i)
 		{
 			clearFrameBuffer(sbuffer);
-			setFlags(RenderFlag::ADDITIVE);
+			setFlags(RenderFlag::DEPTH);
 			
+			// SPASS
 			for (int i = 0; i < 3; ++i)
 			{
 				loc = 0;
@@ -120,16 +121,16 @@ void main()
 			}
 
 			setFlags(RenderFlag::ADDITIVE);
-			for (int i = 0; i < 3; ++i)
+			for (int j = 0; j < 3; ++j)
 			{
 				loc = 0;
 				slot = 0;
 				setUniforms(lpassD, loc, slot,
 														cam, 
-														 objects[i].model,
+														 objects[j].model,
 														lights[i], 
 													gbuffer.targets[3], gbuffer.targets[2], sbuffer.depthTarget,
-													objects[i].gloss );
+													objects[j].gloss );
 				draw(lbuffer, lpassD, objects[0].geo);
 			}
 

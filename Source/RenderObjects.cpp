@@ -174,6 +174,154 @@ Shader makeShader(const char * vert_source, const char * rag_source)
 	return retval;
 }
 
+Shader makeShader(const char *vert_source, const char *rag_source, const char *geo_source, const char *cntrl_source, const char *eval_source)
+{
+	Shader retval = { 0 };
+
+	retval.handle = glCreateProgram();
+	unsigned vs = glCreateShader(GL_VERTEX_SHADER);
+	unsigned fs = glCreateShader(GL_FRAGMENT_SHADER);
+	unsigned cl = glCreateShader(GL_TESS_CONTROL_SHADER);
+	unsigned el = glCreateShader(GL_TESS_EVALUATION_SHADER);
+	unsigned geo = glCreateShader(GL_GEOMETRY_SHADER);
+
+	glShaderSource(vs, 1, &vert_source, 0);
+	glShaderSource(fs, 1, &rag_source, 0);
+	glShaderSource(geo, 1, &geo_source, 0);
+	glShaderSource(cl, 1, &cntrl_source, 0);
+	glShaderSource(el, 1, &eval_source, 0);
+//////VERTEX SHADER
+	glCompileShader(vs);
+
+#ifdef  _DEBUG
+	GLint successVS = GL_FALSE;
+
+	glGetShaderiv(vs, GL_COMPILE_STATUS, &successVS);
+	if (successVS == GL_FALSE)
+	{
+		int length = 0;
+		glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &length);
+		char *log = new char[length];
+		glGetShaderInfoLog(vs, length, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+#endif //  _DEBUG
+
+//////FRAGMENT SHADER
+	glCompileShader(fs);
+
+#ifdef  _DEBUG
+	GLint successFS = GL_FALSE;
+
+	glGetShaderiv(fs, GL_COMPILE_STATUS, &successFS);
+	if (successFS == GL_FALSE)
+	{
+		int lengthz = 0;
+		glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &lengthz);
+		char *log = new char[lengthz];
+		glGetShaderInfoLog(fs, lengthz, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+
+	//////VERTEX SHADER
+	glCompileShader(geo);
+
+#ifdef  _DEBUG
+	GLint successGEO = GL_FALSE;
+
+	glGetShaderiv(geo, GL_COMPILE_STATUS, &successGEO);
+	if (successGEO == GL_FALSE)
+	{
+		int length = 0;
+		glGetShaderiv(geo, GL_INFO_LOG_LENGTH, &length);
+		char *log = new char[length];
+		glGetShaderInfoLog(geo, length, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+#endif //  _DEBUG
+
+
+
+#endif //  _DEBUG
+
+//////CONTROL SHADER
+	glCompileShader(cl);
+
+#ifdef  _DEBUG
+	GLint successCL = GL_FALSE;
+
+	glGetShaderiv(cl, GL_COMPILE_STATUS, &successCL);
+	if (successCL == GL_FALSE)
+	{
+		int length = 0;
+		glGetShaderiv(cl, GL_INFO_LOG_LENGTH, &length);
+		char *log = new char[length];
+		glGetShaderInfoLog(cl, length, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+#endif //  _DEBUG
+
+//////EVALUATION SHADER
+	glCompileShader(el);
+
+#ifdef  _DEBUG
+	GLint successEL = GL_FALSE;
+
+	glGetShaderiv(el, GL_COMPILE_STATUS, &successEL);
+	if (successEL == GL_FALSE)
+	{
+		int lengthz = 0;
+		glGetShaderiv(el, GL_INFO_LOG_LENGTH, &lengthz);
+		char *log = new char[lengthz];
+		glGetShaderInfoLog(el, lengthz, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+#endif //  _DEBUG
+
+
+	glAttachShader(retval.handle, vs);
+	glAttachShader(retval.handle, fs);
+	glAttachShader(retval.handle, cl);
+	glAttachShader(retval.handle, el);
+	glAttachShader(retval.handle, geo);
+
+	glLinkProgram(retval.handle);
+
+#ifdef  _DEBUG
+	GLint successRET = GL_FALSE;
+
+	glGetProgramiv(retval.handle, GL_LINK_STATUS, &successRET);
+	if (successRET == GL_FALSE)
+	{
+		int lengthx = 0;
+		glGetProgramiv(retval.handle, GL_INFO_LOG_LENGTH, &lengthx);
+		char *log = new char[lengthx];
+		glGetProgramInfoLog(retval.handle, lengthx, 0, log);
+		std::cerr << log << std::endl;
+		delete[] log;
+	}
+
+#endif //  _DEBUG
+
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+	glDeleteShader(cl);
+	glDeleteShader(el);
+
+
+	return retval;
+}
+
 void freeShader(Shader & s)
 {
 	glDeleteProgram(s.handle);
