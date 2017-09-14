@@ -13,10 +13,22 @@ out vec3 gPatchDistance;
 out vec3 gTriDistance;
 
 
+//////////
+in vec2 EvalvUV[3];
+out vec2 GeovUV;
+
+
 void main()
 {
+	
 	vec3 A = tePosition[2] - tePosition[0];
 	vec3 B = tePosition[1] - tePosition[0];
+
+	vec2 a = EvalvUV[1] - EvalvUV[2] - EvalvUV[0];
+	
+	//GeovUV = a;
+	GeovUV = EvalvUV[0];
+	
 
 	gFacetNormal = NormalMatrix * normalize(cross(A,B));
 

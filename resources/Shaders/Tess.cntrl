@@ -5,7 +5,9 @@
 
 layout(vertices = 3) out;
 
-
+//////////
+in vec2 vUV[];
+out vec2 CntrlvUV[];
 
 
 in vec3 vPos[];
@@ -22,6 +24,8 @@ layout(location = 1)uniform float TessLevelOuter;
 
 void main()
 {
+	
+	CntrlvUV[ID] = vUV[ID];
 	tcPos[ID] = vPos[ID];
 
 	if(ID==0)

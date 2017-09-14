@@ -2,7 +2,7 @@
 #include "graphics\Vertex.h"
 #include "graphics\RenderObjects.h"
 #include "graphics\draw.h"
-
+#include "GenShape.h"
 
 #include <iostream>
 #include <random>
@@ -19,18 +19,21 @@ void main()
 
 
 	Vertex vquad[] = {
-		{ { -1,-1,0,1 },{},{ 0,0 },{ 0,0,1,0 } },
-		{ { 1,-1,0,1 },{},{ 1,0 },{ 0,0,1,0 } },
-		{ { 1, 1,0,1 },{},{ 1,1 },{ 0,0,1,0 } },
-		{ { -1, 1,0,1 },{},{ 0,1 },{ 0,0,1,0 } } };
+		{ { -1,-1,0,1 },{},{ 0,0 },{ 0,0,1,0 } },	//0
+		{ { 1,-1,0,1 },{},{ 1,0 },{ 0,0,1,0 } },	//1
+		{ { 1, 1,0,1 },{},{ 1,1 },{ 0,0,1,0 } },	//2
+		{ { -1, 1,0,1 },{},{ 0,1 },{ 0,0,1,0 } } };	//3
 
-	unsigned quadidx[] = { 0,1,3, 1,2,3 };
+	unsigned quadidx[] = { 1,2,3, 0,1,3 };
 	solveTangets(vquad, 4, quadidx, 6);
 	Geometry floor_geo = makeGeometry(vquad, 4, quadidx, 6);
-	glm::mat4 floor_model;// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
+	glm::mat4 floor_model = glm::scale(glm::vec3(5, .5f, 5)) ;// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
 		//* glm::scale(glm::vec3(5, 5, 1));
 
 	Geometry cube = loadGeometry("../../resources/models/cube.obj");
+	Geometry sphere = loadGeometry("../../resources/models/sphere.obj");
+	Geometry plane = MakeGrid(5, 1);
+	Geometry Ngon = makeNGon(16, .5f);
 	//Geometry sphere = loadGeometry("../../resources/models/sphere.obj");
 	//Geometry ss = loadGeometry("../../resources/models/soulspear.obj");
 	
@@ -40,11 +43,18 @@ void main()
 							 "../../resources/shaders/Tess.cntrl",
 							 "../../resources/shaders/Tess.eval");
 
-	Texture texColor = loadTexture("../../resources/textures/Valley.jpg");
-
+	/*Texture texColor = loadTexture("../../resources/textures/Wavy.PNG");
+	Texture texColor2 = loadTexture("../../resources/textures/Pink2.PNG");*/
 	
 
-
+	Texture Ambient = loadTexture("../../resources/textures/earth_normal.jpg");
+	Texture Diffuse = loadTexture("../../resources/textures/earth_diffuse.jpg");
+	
+	Texture Ambient2 = loadTexture("../../resources/textures/pattern_51_height.png");
+	Texture Diffuse2 = loadTexture("../../resources/textures/pattern_51_diffus.png");
+	
+	Texture Ambient3 = loadTexture("../../resources/textures/soulspear_specular.tga");
+	Texture Diffuse3 = loadTexture("../../resources/textures/soulspear_diffuse.tga");
 	// Light
 	glm::vec3 light_pos = glm::normalize(glm::vec3(.8, -1, -1));
 	glm::mat4 light_proj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
@@ -53,14 +63,21 @@ void main()
 	
 	
 	//Tesselation
-	float TessLvlInner = 3; //3
-	float TessLvlOuter = 6; //3
+	float TessLvlInner = 1; //3
+	float TessLvlOuter = 1.5f; //6
 	glm::vec3 AmbientColor = glm::vec3(1, 0, 0);
 	glm::vec3 DiffuseColor = glm::vec3(0, 1, 0);
 	
 
-	
+	/////////////////////////////////////////////
+	/////////////////////////////////////////////
+	/////////////////////////////////////////////
 
+	//////http://codeflow.org/entries/2010/nov/07/opengl-4-tessellation/
+
+	/////////////////////////////////////////////
+	/////////////////////////////////////////////
+	/////////////////////////////////////////////
 
 	
 	FrameBufer screen = { 0,1280, 720 };
@@ -118,8 +135,8 @@ void main()
 		int loc = 0;
 		int slot = 0;
 		
-
-		setUniforms(Tess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, DiffuseColor , AmbientColor , normalMatrix );
+																									// Texture   //texture					
+		setUniforms(Tess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, Diffuse3, Ambient3, normalMatrix );
 		
 		tess_draw(screen, Tess, cube);
 

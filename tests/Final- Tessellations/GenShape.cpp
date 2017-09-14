@@ -14,35 +14,35 @@ Geometry makeNGon(size_t sides, float r)
 
 	Vertex *verts = new Vertex[vsize];
 	unsigned *idxs = new unsigned[isize]; /*{7,0,1,
-											7,1,2,
-											7,2,3,
-											7,3,4,
-											7,4,5,
-											7,5,6,
-											7,6,0};*/
-
-	
+										  7,1,2,
+										  7,2,3,
+										  7,3,4,
+										  7,4,5,
+										  7,5,6,
+										  7,6,0};*/
 
 
-	for (int i = vsize-1; i > 0; i--)
+
+
+	for (int i = vsize - 1; i > 0; i--)
 	{
 		float x = (float)(cos((angle * i) * 3.14 / 180));
-			//cos angle
+		//cos angle
 		float y = (float)(sin((angle * i) * 3.14 / 180));
-				// sin angle
-		verts[i] =  { glm::vec4{ x, y,0,1 }  ,  { abs(x),0,abs(y),1 } } ;
-		 
-		/*if (i == vsize) 
+		// sin angle
+		verts[i] = { glm::vec4{ x, y,0,1 }  ,{ abs(x),0,abs(y),1 }, glm::vec4{ x, y,0,1 } };
+
+		/*if (i == vsize)
 		{
-			verts[0] = { {{ 0,0,0,0}}, {{0,0,1,1}} };
+		verts[0] = { {{ 0,0,0,0}}, {{0,0,1,1}} };
 		}
 		else
 		{
-			verts[i] = verts[i - 1] * r;
-		}*/			
+		verts[i] = verts[i - 1] * r;
+		}*/
 	}
 	int q = 2;
-	for (int i = isize -1; i >= 2; i-=3)
+	for (int i = isize - 1; i >= 2; i -= 3)
 	{
 		if (i != 2)
 		{
@@ -56,20 +56,20 @@ Geometry makeNGon(size_t sides, float r)
 			idxs[i - 1] = vsize - 2;
 			idxs[i - 2] = vsize - 1;
 		}
-		
+
 		std::cout << "Index: " << i << std::endl;
 		std::cout << idxs[i] << std::endl;
-		std::cout << idxs[i -1] << std::endl;
-		std::cout << idxs[i -2] << std::endl;
+		std::cout << idxs[i - 1] << std::endl;
+		std::cout << idxs[i - 2] << std::endl;
 		std::cout << std::endl;
 		//idxs[i - 2] = idxs[i - 1] - 1;
 
-		
+
 
 		q++;
 	}
 
-	
+
 
 
 	Geometry ret = makeGeometry(verts, vsize, idxs, isize);
@@ -83,7 +83,7 @@ Geometry makeNGon(size_t sides, float r)
 
 
 
-	
+
 }
 
 Geometry MakeGrid(int dim, float size)

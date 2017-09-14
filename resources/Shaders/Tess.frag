@@ -6,10 +6,17 @@ in vec3 gTriDistance;
 in vec3 gPatchDistance;
 in float gPrimitive;
 
-layout(location = 4) uniform vec3 lightPosition;
-layout(location = 5) uniform vec3 DiffuseMaterial;
-layout(location = 6) uniform vec3 AmbientMaterial;
 
+
+//////
+in vec2 GeovUV;
+
+
+
+layout(location = 4) uniform vec3 lightPosition;
+layout(location = 5) uniform sampler2D DiffuseTex;
+layout(location = 6) uniform sampler2D AmbientTex;
+							//vec3
 float amplify(float d, float scale, float offset)
 {
 	d = scale * d + offset;
@@ -23,15 +30,29 @@ float amplify(float d, float scale, float offset)
 
 void main()
 {
+	/////////
+												//gTriDistance.xy
+	
+
+
 	vec3 N = normalize(gFacetNormal);
 	vec3 L = lightPosition;
 	float df = abs(dot(N,L));
-	vec3 color = AmbientMaterial + df * DiffuseMaterial;
-
 	float d1 = min(min(gTriDistance.x,gTriDistance.y), gTriDistance.z);
 	float d2 = min(min(gPatchDistance.x,gPatchDistance.y), gPatchDistance.z);
 
+
+	vec3 DiffuseMaterial = texture(DiffuseTex, gTriDistance.xy).xyz;
+	vec3 AmbientMaterial = texture(AmbientTex, gTriDistance.xy).xyz;
+	vec3 color = AmbientMaterial + df * DiffuseMaterial;
+	vec3 Colors = vec3(.5f,0,.5f);
+	
+
+	//Textures
 	color = amplify(d1,40,-.05) * amplify(d2,60,-0.5) * color;
+
+	//Colors
+	//color = amplify(d1,40,-.05) * amplify(d2,60,-0.5) * Colors;
 
 	FragColor = vec4(color, 1.0);
 
