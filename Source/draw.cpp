@@ -34,7 +34,7 @@ void Qtess_draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 	
 	glPatchParameteri(GL_PATCH_VERTICES, 16);
 	glDrawArrays(GL_PATCHES, 0, g.size);
-	glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
 
 }
 
@@ -47,8 +47,8 @@ void Tess_draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 	glViewport(0, 0, f.width, f.height);
 
 	glPatchParameteri(GL_PATCH_VERTICES, 4);
-	glDrawArrays(GL_PATCHES, 0, g.size);
-	//glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_PATCHES, 0, g.size);
+	glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
 }
 
 

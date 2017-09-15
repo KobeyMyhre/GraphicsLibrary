@@ -11,7 +11,7 @@ layout(location = 6) uniform vec3 AmbientMaterial;
 layout(location = 7) uniform vec3 SpecularMaterial;
 layout(location = 8) uniform float Shininess;
 const vec3 InnerLineColor = vec3(1, 1, 1);
-const bool DrawLines = false;
+const bool DrawLines = true;
 
  
 

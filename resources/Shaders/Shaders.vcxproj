@@ -126,6 +126,8 @@
     <None Include="mvplite.vert" />
     <None Include="Other.frag" />
     <None Include="Other.vert" />
+    <None Include="Paralax.frag" />
+    <None Include="Paralax.vert" />
     <None Include="Planet.frag" />
     <None Include="Planet.vert" />
     <None Include="point.frag" />

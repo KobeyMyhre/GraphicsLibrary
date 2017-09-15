@@ -116,5 +116,7 @@
     <None Include="Tess.geom">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Paralax.vert" />
+    <None Include="Paralax.frag" />
   </ItemGroup>
 </Project>

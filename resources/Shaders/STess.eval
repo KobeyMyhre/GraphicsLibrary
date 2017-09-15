@@ -36,7 +36,7 @@ void main()
 	vec3 p1 = gl_TessCoord.y * tcPos[1];
 	vec3 p2 = gl_TessCoord.z * tcPos[2];
 
-	tePatchDistance = gl_TessCoord;
+	tePatchDistance = gl_TessCoord ;
 	tePosition = normalize(p0+p1+p2);
 	
 	//EvalvUV = mix(uv0,uv1,gl_TessCoord.y);

@@ -1,7 +1,7 @@
 #version 450
 
 
-in vec2 texcoord;
+	in vec2 texcoord;
     in float depth;
     out vec4 fragment;
 	

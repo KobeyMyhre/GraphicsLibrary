@@ -27,9 +27,9 @@ void main()
 	unsigned quadidx[] = { 1,2,3, 0,1,3 };
 	solveTangets(vquad, 4, quadidx, 6);
 	Geometry floor_geo = makeGeometry(vquad, 4, quadidx, 6);
-	glm::mat4 floor_model = glm::scale(glm::vec3(1,1, 1)) * glm::rotate(glm::radians(90.f), glm::vec3(0, 2, 0));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
-	glm::mat4 middle_Mod = glm::translate(glm::vec3(-2, 0, 0));
-	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(-1, 3, 0)) *glm::scale(glm::vec3(0.5f, 5, 0.5f));
+	glm::mat4 floor_model = glm::scale(glm::vec3(100,100, 100)) * glm::rotate(glm::radians(90.f), glm::vec3(-0.5, -0.5, 0));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
+	glm::mat4 middle_Mod = glm::translate(glm::vec3(-2, 0, 0)) * glm::scale(glm::vec3(.5f, .5f, .5f));
+	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(-1, 4, 0));
 //* glm::scale(glm::vec3(5, 5, 1));
 
 	Geometry cube = loadGeometry("../../resources/models/cube.obj");
@@ -85,8 +85,8 @@ void main()
 	//Tesselation
 	float TessLvlInner = 1; //3
 	float TessLvlOuter = 1; //6
-	glm::vec3 AmbientColor = glm::vec3(1, 1, 0);
-	glm::vec3 DiffuseColor = glm::vec3(0, 1, 1);
+	glm::vec3 AmbientColor = glm::vec3(1, 0, 0);
+	glm::vec3 DiffuseColor = glm::vec3(1, 0, 1);
 	glm::vec3 SpecularColor = glm::vec3(.5f, .5f, .5f);
 	
 
@@ -176,46 +176,62 @@ void main()
 		glm::mat4 modelView3 = cam_view * middle_Mod2;
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(modelView));
 
+
+		glm::mat4 mvp = cam_proj * floor_model;
+
 		glm::mat4 B = glm::mat4(-1,3,-3,1,
 								3,-6,3,0,
 								-3,3,0,0,
 								1,0,0,0);
 
-		glm::mat4 B1 = glm::mat4(-1, 1, -1, 1,
-							 	  1,-1,  1, 0,
-								 -1, 1,  0, 0,
-								  1, 0,  0, 0);
+		glm::mat4 B1 = glm::mat4(0, 0, 0,  1,
+								 0, 0, 3, -3,
+								 0, 3,-6,  3,
+								 1,-3, 3, -1 );
 		
 		glm::mat4 Bt = glm::transpose(B);
-
+		//Bt = glm::transpose(modelView2);
+		glm::vec2 ScreenSize = glm::vec2(1280, 720);
 		
-
+		float shiny = 50;
 		setFlags(RenderFlag::DEPTH);
 		clearFrameBuffer(screen);
 
-
-														   // Shadow Pass
+		
+								   // Shadow Pass
 		
 		int loc = 0;
 		int slot = 0;
 		
 																									// Texture   //texture					
-		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, Specular6, Diffuse6, normalMatrix );
+		/*setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, Specular6, Diffuse6, normalMatrix);
 		
 		Stess_draw(screen, SphereTess, cube);
-		float shiny = 1.5f;
+		
 
 		 loc = 0;
 		 slot = 0;
 
 		
+		 setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, Ambient5, Diffuse5, normalMatrix);
 
+		 Stess_draw(screen, SphereTess, sphere);
+
+		 loc = 0;
+		 slot = 0;*/
+
+
+		/* setUniforms(Tess, loc, slot, Ambient5, ScreenSize, mvp, shiny, Diffuse2, Specular2);
+
+		 Tess_draw(screen, Tess, ss); */
 
 		
 		setUniforms(QuadTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, DiffuseColor, AmbientColor,SpecularColor ,shiny,normalMatrix, B ,Bt);
 
 		Qtess_draw(screen, QuadTess, ss);
-		glm::vec2 ScreenSize = glm::vec2(1280, 720);
+
+
+		
 		/*setUniforms(Tess, loc, slot, Ambient2, ScreenSize, modelView, shiny, Diffuse2, Specular2);
 
 		Tess_draw(screen, Tess, ss); */

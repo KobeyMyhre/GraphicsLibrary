@@ -21,7 +21,7 @@ void main()
 {
 	
 	vec3 A = tePosition[2] - tePosition[0];
-	vec3 B = tePosition[1] - tePosition[2];
+	vec3 B = tePosition[1] - tePosition[0];
 
 
 	gFacetNormal = NormalMatrix * normalize(cross(A,B));

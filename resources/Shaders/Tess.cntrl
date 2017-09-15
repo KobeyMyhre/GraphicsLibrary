@@ -39,7 +39,7 @@ float level(vec2 v0, vec2 v1)
 void main()
 {
      
-     gl_out[id].gl_Position = gl_in[id].gl_Position;
+     //gl_out[id].gl_Position = gl_in[id].gl_Position;
      if(id == 0){
          vec4 v0 = project(gl_in[0].gl_Position);
          vec4 v1 = project(gl_in[1].gl_Position);
@@ -77,5 +77,6 @@ void main()
              gl_TessLevelOuter[2] = e2;
              gl_TessLevelOuter[3] = e3;
          }
+		 gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
      }
  }
