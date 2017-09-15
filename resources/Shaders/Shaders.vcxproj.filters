@@ -99,10 +99,22 @@
     <None Include="lpassD.vert">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="STess.cntrl" />
+    <None Include="STess.eval" />
+    <None Include="STess.frag" />
+    <None Include="STess.geom" />
+    <None Include="STess.vert" />
+    <None Include="QTess.vert" />
+    <None Include="QTess.frag" />
+    <None Include="QTess.eval" />
+    <None Include="QTess.geom" />
+    <None Include="QTess.cntrl" />
     <None Include="Tess.vert" />
     <None Include="Tess.frag" />
     <None Include="Tess.cntrl" />
     <None Include="Tess.eval" />
-    <None Include="Tess.geom" />
+    <None Include="Tess.geom">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

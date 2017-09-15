@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-void tess_draw(const FrameBufer &f, const Shader &s, const Geometry &g)
+void Stess_draw(const FrameBufer &f, const Shader &s, const Geometry &g)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, f.handle);
 	glUseProgram(s.handle);
@@ -23,7 +23,33 @@ void tess_draw(const FrameBufer &f, const Shader &s, const Geometry &g)
 
 }
 
+void Qtess_draw(const FrameBufer & f, const Shader & s, const Geometry & g)
+{
 
+	glBindFramebuffer(GL_FRAMEBUFFER, f.handle);
+	glUseProgram(s.handle);
+	glBindVertexArray(g.handle);
+
+	glViewport(0, 0, f.width, f.height);
+	
+	glPatchParameteri(GL_PATCH_VERTICES, 16);
+	glDrawArrays(GL_PATCHES, 0, g.size);
+	glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
+
+}
+
+void Tess_draw(const FrameBufer & f, const Shader & s, const Geometry & g)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, f.handle);
+	glUseProgram(s.handle);
+	glBindVertexArray(g.handle);
+
+	glViewport(0, 0, f.width, f.height);
+
+	glPatchParameteri(GL_PATCH_VERTICES, 4);
+	glDrawArrays(GL_PATCHES, 0, g.size);
+	//glDrawElements(GL_PATCHES, g.size, GL_UNSIGNED_INT, 0);
+}
 
 
 void draw(const FrameBufer & f, const Shader & s, const Geometry & g)
@@ -42,6 +68,8 @@ void draw(const FrameBufer & f, const Shader & s, const Geometry & g)
 
 
 }
+
+
 
 void setFlags(int flags)
 {
@@ -109,6 +137,10 @@ namespace __internal
 	void t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const  glm::vec4 &val)
 	{
 		glProgramUniform4fv(s.handle, loc_io++, 1, glm::value_ptr(val));
+	}
+	void t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const glm::vec2 & val)
+	{
+		glProgramUniform2fv(s.handle, loc_io++, 1, glm::value_ptr(val));
 	}
 	void t_setUniforms(const Shader & s, int & loc_io, int & tex_io, const  glm::vec3 & val)
 	{

@@ -1,0 +1,38 @@
+#version 450
+
+
+// shadertype=glsl
+
+layout(vertices = 3) out;
+
+//////////
+in vec2 vUV[];
+out vec2 CntrlvUV[];
+
+
+in vec3 vPos[];
+out vec3 tcPos[];
+
+
+layout(location = 0)uniform float TessLevelInner;
+
+layout(location = 1)uniform float TessLevelOuter;
+
+
+
+#define ID gl_InvocationID
+
+void main()
+{
+	
+	CntrlvUV[ID] = vUV[ID];
+	tcPos[ID] = vPos[ID];
+
+	if(ID==0)
+	{
+	gl_TessLevelInner[0] = TessLevelInner;
+	gl_TessLevelOuter[0] = TessLevelOuter;
+	gl_TessLevelOuter[1] = TessLevelOuter;
+	gl_TessLevelOuter[2] = TessLevelOuter;
+	}
+}

@@ -9,7 +9,10 @@ struct Texture;
 
 void draw(const FrameBufer &f, const Shader &s, const Geometry &g);
 
-void tess_draw(const FrameBufer &f, const Shader &s, const Geometry &g);
+void Stess_draw(const FrameBufer &f, const Shader &s, const Geometry &g);
+void Qtess_draw(const FrameBufer &f, const Shader &s, const Geometry &g);
+void Tess_draw(const FrameBufer &f, const Shader &s, const Geometry &g);
+
 
 enum RenderFlag 
 {
@@ -32,6 +35,7 @@ namespace __internal
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, int val);
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const Texture &val);
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const glm::vec4 &val);
+	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const glm::vec2 &val);
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const glm::vec3 &val);
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const glm::mat4 &val);
 	void t_setUniforms(const Shader &s, int &loc_io, int &tex_io, const glm::mat3 &val);

@@ -1,60 +1,25 @@
 #version 450
 
-out vec4 FragColor;
-in vec3 gFacetNormal;
-in vec3 gTriDistance;
-in vec3 gPatchDistance;
-in float gPrimitive;
 
-
-
-//////
-in vec2 GeovUV;
-
-
-
-layout(location = 4) uniform vec3 lightPosition;
-layout(location = 5) uniform sampler2D DiffuseTex;
-layout(location = 6) uniform sampler2D AmbientTex;
-							//vec3
-float amplify(float d, float scale, float offset)
-{
-	d = scale * d + offset;
-	d = clamp(d,0,1);
-	d = 1 - exp2(-2*d*d);
-	return d;
-
-}
-
-
-
-void main()
-{
-	/////////
-												//gTriDistance.xy
+in vec2 texcoord;
+    in float depth;
+    out vec4 fragment;
 	
+   layout(location = 4)uniform sampler2D diffuse;
+   layout(location = 0)uniform sampler2D terrain;
+   layout(location = 5)uniform sampler2D noise_tile;
 
+    vec3 incident = normalize(vec3(1.0, 0.2, 0.5));
+    vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 
-	vec3 N = normalize(gFacetNormal);
-	vec3 L = lightPosition;
-	float df = abs(dot(N,L));
-	float d1 = min(min(gTriDistance.x,gTriDistance.y), gTriDistance.z);
-	float d2 = min(min(gPatchDistance.x,gPatchDistance.y), gPatchDistance.z);
+    void main()
+	{
+        vec3 normal = normalize(texture(terrain, texcoord).xyz);
+        vec4 color = texture(diffuse, texcoord);
+        float noise_factor = texture(noise_tile, texcoord*32).r+0.1;
 
+        float dot_surface_incident = max(0, dot(normal, incident));
 
-	vec3 DiffuseMaterial = texture(DiffuseTex, gTriDistance.xy).xyz;
-	vec3 AmbientMaterial = texture(AmbientTex, gTriDistance.xy).xyz;
-	vec3 color = AmbientMaterial + df * DiffuseMaterial;
-	vec3 Colors = vec3(.5f,0,.5f);
-	
-
-	//Textures
-	color = amplify(d1,40,-.05) * amplify(d2,60,-0.5) * color;
-
-	//Colors
-	//color = amplify(d1,40,-.05) * amplify(d2,60,-0.5) * Colors;
-
-	FragColor = vec4(color, 1.0);
-
-
-}
+        color = color * light * noise_factor * (max(0.1, dot_surface_incident)+0.05)*1.5;
+        fragment = mix(color, color*0.5+vec4(0.5, 0.5, 0.5, 1.0), depth*2.0);
+	}
