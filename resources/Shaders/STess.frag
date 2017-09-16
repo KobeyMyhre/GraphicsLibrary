@@ -37,19 +37,24 @@ void main()
 
 	vec3 N = normalize(gFacetNormal);
 	vec3 L = lightPosition;
-	float df = abs(dot(N,L));
+	float df = abs(dot(N,L)) * 5;
 
 	float d1 = min(min(gTriDistance.x,gTriDistance.y), gTriDistance.z);
 	float d2 = min(min(gPatchDistance.x,gPatchDistance.y), gPatchDistance.z);
 	
 
-	vec3 DiffuseMaterial = texture(DiffuseTex, gTriDistance.xy).xyz;
-	vec3 AmbientMaterial = texture(AmbientTex, gTriDistance.xy).xyz;
+											//PATCHES
+	vec3 DiffuseMaterial = texture(DiffuseTex, GeovUV).xyz;
+	vec3 AmbientMaterial = texture(AmbientTex, GeovUV).xyz;
 	vec3 color = AmbientMaterial + df * DiffuseMaterial;
-	vec3 Colors = vec3(.5f,0,.5f);
-	
-	
 
+
+	 
+
+	
+	
+	
+	
 
 	if(DrawLines)
 	{
@@ -62,6 +67,6 @@ void main()
 	//color = amplify(d1,40,-.05) * amplify(d2,60,-0.5) * Colors;
 
 	FragColor = vec4(color, 1.0);
-
+	
 
 }

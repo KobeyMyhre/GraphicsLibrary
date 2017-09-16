@@ -27,9 +27,14 @@ void main()
 	//EvalvUV = normalize(uv0 + uv1);
 	vec2 uv0 = mix(CntrlvUV[0],CntrlvUV[1],gl_TessCoord.x);
 	vec2 uv1 = mix(CntrlvUV[1],CntrlvUV[2],gl_TessCoord.x);
+	vec2 uv2 = mix(CntrlvUV[0],CntrlvUV[2],gl_TessCoord.x);
 
-	EvalvUV = mix(uv0, uv1,  gl_TessCoord.y);
-	
+	//uv0 = CntrlvUV[2] - CntrlvUV[0];
+	//uv1 = CntrlvUV[1] - CntrlvUV[0];
+	//vec2 uv2 = CntrlvUV[2] - CntrlvUV[1];
+
+	EvalvUV = mix(uv0, uv1, uv2) * gl_TessCoord.y;
+	//EvalvUV = (uv0 + uv1 + uv2) / 3;
 
 
 	vec3 p0 = gl_TessCoord.x * tcPos[0];

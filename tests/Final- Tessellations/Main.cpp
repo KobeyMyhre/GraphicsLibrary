@@ -27,7 +27,7 @@ void main()
 	unsigned quadidx[] = { 1,2,3, 0,1,3 };
 	solveTangets(vquad, 4, quadidx, 6);
 	Geometry floor_geo = makeGeometry(vquad, 4, quadidx, 6);
-	glm::mat4 floor_model = glm::scale(glm::vec3(100,100, 100)) * glm::rotate(glm::radians(90.f), glm::vec3(-0.5, -0.5, 0));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
+	glm::mat4 floor_model = glm::translate(glm::vec3(0, 0, -2)) * glm::scale(glm::vec3(.5f,5, 3)) * glm::rotate(glm::radians(90.f), glm::vec3(-1, 1, 1));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
 	glm::mat4 middle_Mod = glm::translate(glm::vec3(-2, 0, 0)) * glm::scale(glm::vec3(.5f, .5f, .5f));
 	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(-1, 4, 0));
 //* glm::scale(glm::vec3(5, 5, 1));
@@ -75,16 +75,25 @@ void main()
 
 	Texture Ambient3 = loadTexture("../../resources/textures/soulspear_specular.tga");
 	Texture Diffuse3 = loadTexture("../../resources/textures/soulspear_diffuse.tga");
+
+	Texture specular125 = loadTexture("../../resources/textures/pattern_125_specular.png");
+	Texture Diffuse125 = loadTexture("../../resources/textures/pattern_125_diffus.png");
+
+	Texture specular177 = loadTexture("../../resources/textures/pattern_177_specular.png");
+	Texture Diffuse177 = loadTexture("../../resources/textures/pattern_177_diffus.png");
+
+	Texture UVTEST = loadTexture("../../resources/textures/UV-testmap.jpg");
+
 	// Light
-	glm::vec3 light_pos = glm::normalize(glm::vec3(.8, 2, -1));
+	glm::vec3 light_pos = glm::normalize(glm::vec3(0, 2, -1));
 	glm::mat4 light_proj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
 	glm::mat4 light_view = glm::lookAt(-light_pos, glm::vec3(0, 0, 0), glm::vec3(0, -1, 0));
 	glm::vec4 color = glm::vec4(0.3f, 0.3f, 0, 1);
 	
 	
 	//Tesselation
-	float TessLvlInner = 1; //3
-	float TessLvlOuter = 1; //6
+	float TessLvlInner = 4; //3
+	float TessLvlOuter = 3; //6
 	glm::vec3 AmbientColor = glm::vec3(1, 0, 0);
 	glm::vec3 DiffuseColor = glm::vec3(1, 0, 1);
 	glm::vec3 SpecularColor = glm::vec3(.5f, .5f, .5f);
@@ -204,14 +213,21 @@ void main()
 		int slot = 0;
 		
 																									// Texture   //texture					
-		/*setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, Specular6, Diffuse6, normalMatrix);
+		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView, light_pos, Diffuse125, specular125, normalMatrix);
 		
 		Stess_draw(screen, SphereTess, cube);
-		
 
-		 loc = 0;
-		 slot = 0;
 
+		loc = 0;
+		slot = 0;
+
+		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, specular177, Diffuse177, normalMatrix);
+
+		Stess_draw(screen, SphereTess, cube);
+
+
+
+		/*
 		
 		 setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, Ambient5, Diffuse5, normalMatrix);
 
@@ -226,9 +242,9 @@ void main()
 		 Tess_draw(screen, Tess, ss); */
 
 		
-		setUniforms(QuadTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, DiffuseColor, AmbientColor,SpecularColor ,shiny,normalMatrix, B ,Bt);
+		/*setUniforms(QuadTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, DiffuseColor, AmbientColor,SpecularColor ,shiny,normalMatrix, B ,Bt);
 
-		Qtess_draw(screen, QuadTess, ss);
+		Qtess_draw(screen, QuadTess, ss);*/
 
 
 		
