@@ -45,14 +45,14 @@ void main()
 
 											//PATCHES
 	vec3 DiffuseMaterial = texture(DiffuseTex, GeovUV).xyz;
-	vec3 AmbientMaterial = texture(AmbientTex, GeovUV).xyz;
+	vec3 AmbientMaterial = texture(AmbientTex, GeovUV).xyz /2;
 	vec3 color = AmbientMaterial + df * DiffuseMaterial;
 
 
 	 
 
 	
-	
+	color = DiffuseMaterial + df * AmbientMaterial;
 	
 	
 

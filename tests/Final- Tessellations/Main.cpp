@@ -14,7 +14,7 @@
 void main()
 {
 	Context context;
-	context.init();
+	context.init(1280,720);
 
 
 
@@ -28,8 +28,11 @@ void main()
 	solveTangets(vquad, 4, quadidx, 6);
 	Geometry floor_geo = makeGeometry(vquad, 4, quadidx, 6);
 	glm::mat4 floor_model = glm::translate(glm::vec3(0, 0, -2)) * glm::scale(glm::vec3(.5f,5, 3)) * glm::rotate(glm::radians(90.f), glm::vec3(-1, 1, 1));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
-	glm::mat4 middle_Mod = glm::translate(glm::vec3(-2, 0, 0)) * glm::scale(glm::vec3(.5f, .5f, .5f));
-	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(-1, 4, 0));
+	glm::mat4 floor_model2 = glm::translate(glm::vec3(0, 0, 2)) * glm::scale(glm::vec3(.5f, 5, 3)) * glm::rotate(glm::radians(90.f), glm::vec3(-1, 1, 1));// = glm::rotate(glm::radians(90.f), glm::vec3(-1, 0, 0))
+	
+
+	glm::mat4 middle_Mod = glm::translate(glm::vec3(2, 0, 0)) * glm::scale(glm::vec3(.5f, .5f, .5f));
+	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(1, 4, 0));
 //* glm::scale(glm::vec3(5, 5, 1));
 
 	Geometry cube = loadGeometry("../../resources/models/cube.obj");
@@ -79,7 +82,7 @@ void main()
 	Texture specular125 = loadTexture("../../resources/textures/pattern_125_specular.png");
 	Texture Diffuse125 = loadTexture("../../resources/textures/pattern_125_diffus.png");
 
-	Texture specular177 = loadTexture("../../resources/textures/pattern_177_specular.png");
+	Texture specular177 = loadTexture("../../resources/textures/pattern_177_normal.png");
 	Texture Diffuse177 = loadTexture("../../resources/textures/pattern_177_diffus.png");
 
 	Texture UVTEST = loadTexture("../../resources/textures/UV-testmap.jpg");
@@ -92,8 +95,8 @@ void main()
 	
 	
 	//Tesselation
-	float TessLvlInner = 4; //3
-	float TessLvlOuter = 3; //6
+	float TessLvlInner = 1; //3
+	float TessLvlOuter = 1; //6
 	glm::vec3 AmbientColor = glm::vec3(1, 0, 0);
 	glm::vec3 DiffuseColor = glm::vec3(1, 0, 1);
 	glm::vec3 SpecularColor = glm::vec3(.5f, .5f, .5f);
@@ -121,11 +124,33 @@ void main()
 	float Damper = 0.1f;
 	int count = 0;
 	int Bcount = 0;
+	float Ltimer = 1;
+	float Otimer = 2;
+	float Firsttime;
+	float Lasttime;
+	float time = 0;
 	while (context.step())
 	{
-		float time = context.getTime();
+		Firsttime = context.getTime();
 
-		
+		std::cout << time << std::endl;
+
+		Ltimer -= time;
+		if (Ltimer <= 0)
+		{
+			Ltimer = 1;
+			TessLvlInner++;
+			if (TessLvlInner > 6) { TessLvlInner = 1; }
+		}
+
+		Otimer -= time;
+		if (Otimer <= 0)
+		{
+			Otimer = 2;
+			TessLvlOuter++;
+			if (TessLvlOuter > 6) { TessLvlOuter = 1; }
+		}
+
 		
 		//Controls
 		const float *input = context.GetJoystickAxes(0, &count);
@@ -181,6 +206,8 @@ void main()
 
 
 		glm::mat4 modelView = cam_view * floor_model;
+		glm::mat4 modelView11 = cam_view * floor_model2;
+		
 		glm::mat4 modelView2 = cam_view * middle_Mod;
 		glm::mat4 modelView3 = cam_view * middle_Mod2;
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(modelView));
@@ -221,11 +248,23 @@ void main()
 		loc = 0;
 		slot = 0;
 
-		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, specular177, Diffuse177, normalMatrix);
+		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView11, light_pos, specular177, Diffuse177, normalMatrix);
 
 		Stess_draw(screen, SphereTess, cube);
 
+		loc = 0;
+		slot = 0;
 
+		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView2, light_pos, Ambient, Diffuse, normalMatrix);
+
+		Stess_draw(screen, SphereTess, cube);
+
+		loc = 0;
+		slot = 0;
+
+		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView3, light_pos, Ambient5, Diffuse5, normalMatrix);
+
+		Stess_draw(screen, SphereTess, ss);
 
 		/*
 		
@@ -254,5 +293,9 @@ void main()
 
 		
 		//... other geometry
-	}
+
+
+		Lasttime = context.getTime();
+		time = Lasttime - Firsttime;
+}
 }
