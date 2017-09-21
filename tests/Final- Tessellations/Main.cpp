@@ -32,7 +32,7 @@ void main()
 	
 
 	glm::mat4 middle_Mod = glm::translate(glm::vec3(2, 0, 0)) * glm::scale(glm::vec3(.5f, .5f, .5f));
-	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(1, 4, 0));
+	glm::mat4 middle_Mod2 = glm::translate(glm::vec3(1, 4, 0)) *glm::scale(glm::vec3(1, 1, 2));
 //* glm::scale(glm::vec3(5, 5, 1));
 
 	Geometry cube = loadGeometry("../../resources/models/cube.obj");
@@ -264,7 +264,7 @@ void main()
 
 		setUniforms(SphereTess, loc, slot, TessLvlInner, TessLvlOuter, cam_proj, modelView3, light_pos, Ambient5, Diffuse5, normalMatrix);
 
-		Stess_draw(screen, SphereTess, ss);
+		Stess_draw(screen, SphereTess, cube);
 
 		/*
 		
