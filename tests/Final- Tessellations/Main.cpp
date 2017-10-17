@@ -153,7 +153,7 @@ void main()
 
 		
 		//Controls
-		const float *input = context.GetJoystickAxes(0, &count);
+		/*const float *input = context.GetJoystickAxes(0, &count);
 		const unsigned char *buttons = context.GetJoystickButtons(0, &Bcount);
 		if (buttons[4] == 1)
 		{
@@ -197,11 +197,11 @@ void main()
 			}
 			std::cout << "X: " << x << " Y: " << y << std::endl;
 			std::cout << "turn: " << turn << std::endl;
-		}
+		}*/
 		//	Camera
 		glm::mat4 cam_view = glm::lookAt(glm::vec3(2, 2, 5),
-			glm::vec3(-y, 1, -x + -3),
-			glm::vec3(0, 1, 0)) * glm::rotate(rotY, glm::vec3(-1, 0, 0)) *  glm::rotate(rotX, glm::vec3(0, 0, -1)) * glm::translate(glm::vec3(0, 0, (-turn  / 3)));
+			glm::vec3(0, 1, -3),
+			glm::vec3(0, 1, 0));
 		glm::mat4 cam_proj = glm::perspective(45.f, 1280.f / 720.f, 1.f, 10.f);
 
 
